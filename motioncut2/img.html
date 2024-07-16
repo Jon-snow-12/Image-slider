@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Slider</title>
+    <style>
+        body {
+            background-image: url('https://t4.ftcdn.net/jpg/05/71/83/47/360_F_571834789_ujYbUnH190iUokdDhZq7GXeTBRgqYVwa.jpg');
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .slider {
+            position: relative;
+            width: 90%;
+            max-width: 900px;
+            height: 50vw;
+            max-height: 500px;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .slider img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 100%;
+            opacity: 0;
+            transition: all 0.5s ease-in-out;
+        }
+
+        .slider img.active {
+            left: 0;
+            opacity: 1;
+        }
+
+        .slider .prev,
+        .slider .next {
+            position: absolute;
+            top: 50%;
+            width: 40px;
+            height: 40px;
+            margin-top: -20px;
+            border-radius: 50%;
+            line-height: 40px;
+            text-align: center;
+            cursor: pointer;
+            background-color: white;
+            color: black;
+            transition: all 0.7s;
+            font-size: 20px;
+            font-weight: bold;
+            z-index: 10;
+        }
+
+        .slider .prev:hover,
+        .slider .next:hover {
+            opacity: 1;
+            background-color: white;
+        }
+
+        .slider .prev {
+            left: 10px;
+        }
+
+        .slider .prev::before {
+            content: '<';
+        }
+
+        .slider .next {
+            right: 10px;
+        }
+
+        .slider .next::before {
+            content: '>';
+        }
+
+        @media (max-width: 768px) {
+            .slider .prev,
+            .slider .next {
+                width: 30px;
+                height: 30px;
+                line-height: 30px;
+                font-size: 18px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .slider {
+                height: 60vw;
+            }
+
+            .slider .prev,
+            .slider .next {
+                width: 25px;
+                height: 25px;
+                line-height: 25px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="slider">
+        <div class="prev"></div>
+        <div class="next"></div>
+        <img src="img/12.jpg" class="active">
+        <img src="img/14.jpg" alt="image 2">
+        <img src="img/15.jpg" alt="image 3">
+        <img src="https://c4.wallpaperflare.com/wallpaper/950/652/865/hollywood-actress-emilia-clarke-wallpaper-preview.jpg" alt="image 4">
+        <img src="img/16.jpg" alt="image 5">
+       
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const slides = document.querySelectorAll('.slider img');
+            let currentSlide = 0;
+            const nextButton = document.querySelector('.next');
+            const prevButton = document.querySelector('.prev');
+
+            function showSlide(index) {
+                slides.forEach((slide, i) => {
+                    slide.classList.remove('active');
+                    if (i === index) {
+                        slide.classList.add('active');
+                    }
+                });
+            }
+
+            function nextSlide() {
+                currentSlide = (currentSlide + 1) % slides.length;
+                showSlide(currentSlide);
+            }
+
+            function prevSlide() {
+                currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+                showSlide(currentSlide);
+            }
+
+            nextButton.addEventListener('click', nextSlide);
+            prevButton.addEventListener('click', prevSlide);
+
+            setInterval(nextSlide, 3000); // Change image every 3 seconds
+        });
+    </script>
+</body>
+</html>
